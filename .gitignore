@@ -1,0 +1,14 @@
+# development enviroments
+.vscode
+
+# python...
+__pycache__
+
+# virtual envs
+env
+
+# outputs
+out/**
+
+# logs
+logs/**
