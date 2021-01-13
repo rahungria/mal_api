@@ -87,24 +87,17 @@ def main(argv, *args, **kwargs):
                         'to': aired_match.groupdict().get('to'),
                     }
 
-                _time = dict(
-                    weekday=0,
-                    hour=0,
-                    minute=0,
+                _datetime = datetime.datetime.strptime(
+                    _aired['from'] + _broadcast['time'],
+                    '%b %d, %Y%H:%M'
                 )
-                if (
-                    _broadcast and _broadcast.get('time') and
-                    _aired and _aired.get('from')
-                ):
-                    _datetime = datetime.datetime.strptime(
-                        _aired['from'] + _broadcast['time'],
-                        '%b %d, %Y%H:%M'
-                    )
-                    _datetime -= datetime.timedelta(hours=12)
+                _datetime -= datetime.timedelta(hours=12)
 
-                    _time['weekday'] = _datetime.weekday()
-                    _time['weekday'] = _datetime.hour
-                    _time['minute'] = _datetime.minute
+                _time = dict(
+                    weekday=_datetime.weekday(),
+                    hour=_datetime.hour,
+                    minute=_datetime.minute,
+                )
 
                 _anime = {
                     'title': anime['title'],
