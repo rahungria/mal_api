@@ -13,7 +13,7 @@ import util
 def main(argv, *args, **kwargs):
     logf = kwargs.get('logf')
     user = argv.username
-    list_url = settings.MAL_LIST_URL.format(user)
+    list_url = settings.MAL_LIST_AIRING_URL.format(user)
 
     util.log_to_file(
         logf, info="DEBUG",
@@ -27,20 +27,10 @@ def main(argv, *args, **kwargs):
             logf=logf, info="FATAL", mod_name=__name__,
         )
 
-    watching_animes = res.json().get('anime')
-    if not watching_animes:
-        raise LoggedException(
-            f'\"{user}\" not watching any anime',
-            logf=logf, mod_name=__name__,
-        )
-
-    airing_anime = [
-        anime for anime in watching_animes if anime['airing_status'] == 1
-    ]
-
+    airing_anime = res.json().get('anime')
     if not airing_anime:
         raise LoggedException(
-            f"\"{user}\" not watching any airing anime",
+            f'no airing anime in "{user}"\'s list',
             logf=logf, mod_name=__name__,
         )
 
@@ -97,10 +87,28 @@ def main(argv, *args, **kwargs):
                         'to': aired_match.groupdict().get('to'),
                     }
 
+                _time = dict(
+                    weekday=0,
+                    hour=0,
+                    minute=0,
+                )
+                if (
+                    _broadcast and _broadcast.get('time') and
+                    _aired and _aired.get('from')
+                ):
+                    _datetime = datetime.datetime.strptime(
+                        _aired['from'] + _broadcast['time'],
+                        '%b %d, %Y%H:%M'
+                    )
+                    _datetime -= datetime.timedelta(hours=12)
+
+                    _time['weekday'] = _datetime.weekday()
+                    _time['weekday'] = _datetime.hour
+                    _time['minute'] = _datetime.minute
+
                 _anime = {
                     'title': anime['title'],
-                    'broadcast': _broadcast,
-                    'aired': _aired,
+                    'time': _time
                 }
                 _animes.append(_anime)
                 util.log_to_file(
@@ -110,14 +118,21 @@ def main(argv, *args, **kwargs):
             except Exception:
                 util.log_to_file(
                     logf, info="ERROR",
-                    msg=f'''Failed fetching info on: "{anime['title']}"'''
+                    msg=f'''Failed fetching/building info on: "{anime['title']}"'''
                 )
 
         util.log_to_file(
             logf, info="DEBUG",
             msg="Writing all fetched anime to json",
         )
-        f.write(json.dumps(_animes))
+        _animes.sort(
+            key=lambda anime: (
+                anime['time'].get('weekday'),
+                anime['time'].get('hour'),
+                anime['time'].get('minute'),
+            )
+        )
+        f.write(json.dumps(_animes, indent=4))
 
 
 # TODO(rapha): proper entry point + arg passing

@@ -1,4 +1,6 @@
+flake8
+ipython
+jedi<0.18
+
 requests<2.26
 beautifulsoup4<4.10
-rich<9.8
-flake8

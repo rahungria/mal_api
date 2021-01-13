@@ -6,6 +6,7 @@ __pycache__
 
 # virtual envs
 env
+venv
 
 # outputs
 out/**
