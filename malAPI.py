@@ -93,8 +93,14 @@ def main(argv, *args, **kwargs):
                 )
                 _datetime -= datetime.timedelta(hours=12)
 
+                _pweekday = _broadcast['weekday']
+                _pweekday = util.weekday_to_int(_pweekday, logf)
                 _time = dict(
-                    weekday=_datetime.weekday(),
+                    weekday=(
+                        _pweekday
+                        if _pweekday != -1
+                        else _datetime.weekday()
+                    ),
                     hour=_datetime.hour,
                     minute=_datetime.minute,
                 )
@@ -108,10 +114,21 @@ def main(argv, *args, **kwargs):
                     logf, info="INFO",
                     msg=f'''fetched data for "{anime['title']}" successfuly'''
                 )
+                util.log_to_file(
+                    logf, info='DEBUG',
+                    msg=(
+                        f"\"{anime['title']}\" aired: {_aired},"
+                        f" broadcast: {_broadcast}, "
+                        f"time: {_time}"
+                    )
+                )
             except Exception:
                 util.log_to_file(
                     logf, info="ERROR",
-                    msg=f'''Failed fetching/building info on: "{anime['title']}"'''
+                    msg=(
+                        "Failed fetching/building info on: "
+                        f"\"{anime['title']}\""
+                    )
                 )
 
         util.log_to_file(
@@ -143,7 +160,7 @@ if __name__ == '__main__':
     with open(f'logs/{str(now.date())}.log', 'a') as logf:
         try:
             util.log_to_file(
-                logf, info="DEBUG",
+                logf, info="INFO",
                 msg="Beggining operations..."
             )
             main(argv, logf=logf)
@@ -154,7 +171,7 @@ if __name__ == '__main__':
             )
         finally:
             util.log_to_file(
-                logf, info="DEBUG",
+                logf, info="INFO",
                 msg="Ending operations..."
             )
 

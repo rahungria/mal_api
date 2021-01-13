@@ -28,3 +28,30 @@ def parse_args():
     # checking / default values
 
     return args
+
+
+def weekday_to_int(weekday, logf):
+    if weekday[-1] == "s":
+        weekday = weekday[:-1]
+
+    value = -1
+    if weekday == "Monday":
+        value = 0
+    elif weekday == "Tuesday":
+        value = 1
+    elif weekday == "Wednesday":
+        value = 2
+    elif weekday == "Thursday":
+        value = 3
+    elif weekday == "Friday":
+        value = 4
+    elif weekday == "Saturday":
+        value = 5
+    elif weekday == "Sunday":
+        value = 6
+
+    log_to_file(
+        logf, info="DEBUG",
+        msg=f"parsing \"{weekday}\" to {value}"
+    )
+    return value
