@@ -48,7 +48,7 @@ def main(argv, *args, **kwargs):
         msg=f'''fetching {len(airing_anime)} airing anime for "{user}"...'''
     )
     # TODO(rapha): make better serailization/persistency
-    with open(f'out/{user}_airing_watching.json', 'w') as f:
+    with open(f'out/{user}_airing.json', 'w') as f:
         _animes = []
         for anime in airing_anime:
             try:
