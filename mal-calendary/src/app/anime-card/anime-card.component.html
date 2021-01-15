@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-12 mt-3">
+        <div class="card">
+          <div class="card-horizontal">
+            <img class="card-img" src="{{ anime.image_url }}" alt="Card image cap">
+
+            <div class="card-body">
+              <h5 class="card-title">{{ anime.title }}</h5>
+              <p class="card-time" *ngIf="anime.time.minute<10; else elseBlock">{{anime.time.hour}}:0{{anime.time.minute}}</p>
+              <ng-template #elseBlock><p class="card-time">{{anime.time.hour}}:{{anime.time.minute}}</p></ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

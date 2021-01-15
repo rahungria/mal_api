@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin     : 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.card-horizontal {
+    display: flex;
+    flex   : 1 1 auto;
+}
+
+.card {
+    float           : left;
+    width           : 300px;
+    background-color: #ebf6f9;
+}
+
+.card-body {
+    
+    position: relative;
+    padding-left: 8px;
+    height      : 126px;
+}
+
+.card-title {}
+
+.card-time {
+    
+    position: absolute;
+    font-size: 13px;
+    bottom: 1px
+}
+
+.card-img {
+    width : 90px;
+    height: 126px;
+}
+
+.linha-dia-da-semana {
+    display: flex
+}

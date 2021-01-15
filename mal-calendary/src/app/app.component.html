@@ -1,0 +1,52 @@
+<div>
+  <div class="linha-dia-da-semana">
+    <div class="dia-da-semana">Domingo</div>
+    <div *ngFor='let anime of animes["Sunday"]'>
+      <app-anime-card [anime]="anime"></app-anime-card>
+    </div>
+  </div>
+  <div class="linha"></div>
+  <div class="linha-dia-da-semana">
+    <div class="dia-da-semana">2ª feira</div>
+    <div *ngFor='let anime of animes["Monday"]'>
+      <app-anime-card [anime]="anime"></app-anime-card>
+    </div>
+    <div class="bottom-line"></div>
+  </div>
+  <div class="linha"></div>
+  <div class="linha-dia-da-semana">
+    <div class="dia-da-semana">3ª feira</div>
+    <div *ngFor='let anime of animes["Tuesday"]'>
+      <app-anime-card [anime]="anime"></app-anime-card>
+    </div>
+  </div>
+  <div class="linha"></div>
+  <div class="linha-dia-da-semana">
+    <div class="dia-da-semana">4ª feira</div>
+    <div *ngFor='let anime of animes["Wednesday"]'>
+      <app-anime-card [anime]="anime"></app-anime-card>
+    </div>
+  </div>
+  <div class="linha"></div>
+  <div class="linha-dia-da-semana">
+    <div class="dia-da-semana">5ª feira</div>
+    <div *ngFor='let anime of animes["Thursday"]'>
+      <app-anime-card [anime]="anime"></app-anime-card>
+    </div>
+  </div>
+  <div class="linha"></div>
+  <div class="linha-dia-da-semana">
+    <div class="dia-da-semana">6ª feira</div>
+    <div *ngFor='let anime of animes["Friday"]'>
+      <app-anime-card [anime]="anime"></app-anime-card>
+    </div>
+  </div>
+  <div class="linha"></div>
+  <div class="linha-dia-da-semana">
+    <div class="dia-da-semana">Sábado</div>
+    <div *ngFor='let anime of animes["Saturday"]'>
+      <app-anime-card [anime]="anime"></app-anime-card>
+    </div>
+  </div>
+  <div class="linha"></div>
+</div>

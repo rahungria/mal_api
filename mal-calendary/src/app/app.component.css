@@ -1,0 +1,19 @@
+.dia-da-semana {
+    background-color: #ADD8E6;
+    border          : solid #3ca1c3;
+    border-width    : 0 1px 0px 0;
+    min-width       : 90px;
+    height          : 126px;
+    line-height     : 126px;
+    text-align      : center;
+    vertical-align  : middle;
+    float           : left;
+}
+
+.bottom-line {}
+
+.linha {
+    height          : 1px;
+    width           : auto;
+    background-color: #3ca1c3;
+}
