@@ -8,10 +8,21 @@ import argparse
 from io import TextIOWrapper
 
 
+WEEKDAYS = {
+    0: "Monday",
+    1: "Tuesday",
+    2: "Wednesday",
+    3: "Thursday",
+    4: "Friday",
+    5: "Saturday",
+    6: "Sunday"
+}
+
+
 # TODO(rapha): make thread safe logger class
 def log_to_file(file: TextIOWrapper, msg: str, info: str = "DEBUG"):
     file.write(
-        f'[{datetime.datetime.now().strftime("%x %X.%f")} {info}] {msg}\n'
+        f'[{datetime.datetime.now().strftime("%x %X.%f")}: {info}]\t{msg}\n'
     )
     file.flush()
 

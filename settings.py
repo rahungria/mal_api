@@ -3,3 +3,5 @@ MAL_LIST_AIRING_URL = (
     'https://api.jikan.moe/v3/user/{}/animelist/'
     '?airing_status=airing'
 )
+
+JST_TO_BRST = 12
