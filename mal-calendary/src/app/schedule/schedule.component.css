@@ -1,0 +1,59 @@
+.dia-da-semana {
+    background-color: #76bdd5;
+    /*border          : solid #3ca1c3;
+    border-width    : 1px 1px 0px 0;*/
+    min-width       : 90px;
+    height          : 126px;
+    line-height     : 126px;
+    text-align      : center;
+    vertical-align  : middle;
+    font-style: bold;
+    overflow: auto;
+}
+.externo{
+    background-color: #ebf6f9;
+    min-width: fit-content;
+    max-width: 100%;
+}
+.bottom-line {}
+
+.no-animes{
+    height: 126px;
+    line-height: 126px;
+    padding-left: 6px;
+    padding-right: 6px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    overflow: auto;
+    font-style: italic;
+}
+
+.linha {
+    height          : 1px;
+    min-width: fit-content;
+    max-width: 100%;
+    background-color: #3ca1c3;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 200px;
+    width    : 100%;
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.input-group.input-group-unstyled input.form-control {
+    -webkit-border-radius: 4px;
+    -moz-border-radius   : 4px;
+    border-radius        : 4px;
+}
+
+.input-group-unstyled .input-group-addon {
+    border-radius   : 4px;
+    border          : 0px;
+    background-color: transparent;
+}

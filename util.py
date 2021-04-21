@@ -9,22 +9,20 @@ from io import TextIOWrapper
 
 
 WEEKDAYS = {
-    0: "Monday",
-    1: "Tuesday",
-    2: "Wednesday",
-    3: "Thursday",
-    4: "Friday",
-    5: "Saturday",
-    6: "Sunday"
+    0: "Sunday",
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday"
 }
 
 
 # TODO(rapha): make thread safe logger class
 def log_to_file(file: TextIOWrapper, msg: str, info: str = "DEBUG"):
-    file.write(
-        f'[{datetime.datetime.now().strftime("%x %X.%f")}: {info}]\t{msg}\n'
-    )
-    file.flush()
+  pass  
+
 
 
 def parse_args():
@@ -46,19 +44,19 @@ def weekday_to_int(weekday, logf):
         weekday = weekday[:-1]
 
     value = -1
-    if weekday == "Monday":
+    if weekday == "Sunday":
         value = 0
-    elif weekday == "Tuesday":
+    elif weekday == "Monday":
         value = 1
-    elif weekday == "Wednesday":
+    elif weekday == "Tuesday":
         value = 2
-    elif weekday == "Thursday":
+    elif weekday == "Wednesday":
         value = 3
-    elif weekday == "Friday":
+    elif weekday == "Thursday":
         value = 4
-    elif weekday == "Saturday":
+    elif weekday == "Friday":
         value = 5
-    elif weekday == "Sunday":
+    elif weekday == "Saturday":
         value = 6
 
     log_to_file(

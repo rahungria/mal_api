@@ -3,16 +3,21 @@ import os
 import json
 import requests
 import datetime
-
+from flask_cors import CORS, cross_origin
 from exceptions import LoggedException
 import settings
 import util
 
+from flask import Flask
+app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
-# TODO(rapha): proper modularization
-def main(argv, *args, **kwargs):
+@app.route("/<string:user>/<int:localTime>/<string:localTimeSign>")
+@cross_origin()
+def main(user, localTime, localTimeSign, *args, **kwargs):
     logf = kwargs.get('logf')
-    user = argv.username
     list_url = settings.MAL_LIST_AIRING_URL.format(user)
 
     util.log_to_file(
@@ -49,6 +54,8 @@ def main(argv, *args, **kwargs):
     )
     # TODO(rapha): make better serailization/persistency
     _animes = []
+    if localTimeSign == 'negative':
+        localTime*=-1
     for anime in airing_anime:
         try:
             page = requests.get(anime['url'])
@@ -90,14 +97,14 @@ def main(argv, *args, **kwargs):
                 _aired['from'] + _broadcast['time'],
                 '%b %d, %Y%H:%M'
             )
-            _datetime -= datetime.timedelta(hours=settings.JST_TO_BRST)
+            _datetime -= datetime.timedelta(hours=localTime)
 
             _pweekday = _broadcast['weekday']
             _pweekday = util.weekday_to_int(_pweekday, logf)
             _time = dict(
                 weekday=(
                     _pweekday
-                    if _datetime.hour < settings.JST_TO_BRST
+                    if _datetime.hour < localTime
                     else _datetime.weekday()
                 ),
                 hour=_datetime.hour,
@@ -149,53 +156,21 @@ def main(argv, *args, **kwargs):
         _weekday[util.WEEKDAYS[weekday]] = list(
             filter(lambda anime: anime['time']['weekday'] == weekday, _animes)
         )
-
+    print(_weekday)
     try:
-        if not os.path.exists(f'out/{user}'):
-            os.makedirs(f'out/{user}')
-        util.log_to_file(
-            file=logf, info="INFO",
-            msg='Logging results to files...',
-        )
-        with open(f'out/{user}/{user}_airing.json', 'w') as f, \
-             open(f'out/{user}/{user}_airing_by_weekday.json', 'w') as wf:
-            f.write(json.dumps(_animes, indent=4))
-            wf.write(json.dumps(_weekday, indent=4))
-    except Exception as e:
-        util.log_to_file(
-            file=logf, info="FATAL",
-            msg=f'Failed writing to file: {e}'
-        )
+        return _weekday
+    except:
+        return "404"
 
+@app.route("/<int:localTime>")
+@cross_origin()
+def f(localTime, *args, **kwargs):
+    return str(23)
 
 # TODO(rapha): proper entry point + arg passing
 # TODO(rapha): proper async pipeline
 if __name__ == '__main__':
-    argv = util.parse_args()
+    
     now = datetime.datetime.now()
+    app.run(debug=True)
 
-    # creating dirs for outputing and logging
-    if not os.path.exists('logs'):
-        os.makedirs('logs')
-    if not os.path.exists('out'):
-        os.makedirs('out')
-
-    with open(f'logs/{str(now.date())}.log', 'a') as logf:
-        try:
-            util.log_to_file(
-                logf, info="INFO",
-                msg="Beggining operations..."
-            )
-            main(argv, logf=logf)
-        except LoggedException as le:
-            util.log_to_file(
-                logf, info="FATAL", mod_name=__name__,
-                msg=f"Managed Exception logged in \"main\": {str(le)}"
-            )
-        finally:
-            util.log_to_file(
-                logf, info="INFO",
-                msg="Ending operations..."
-            )
-
-    print('ending...')

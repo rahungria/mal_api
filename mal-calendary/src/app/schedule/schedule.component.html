@@ -1,0 +1,21 @@
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+<div style="display: flex">
+  <h2 style="cursor:pointer" (click)="home()">MAL SCHEDULE</h2>
+</div>
+<h4>{{ username }}</h4>
+<!-- <div>{{ username }} schedule</div> -->
+<div class="externo">
+  <div *ngFor="let diaSemana of animes | keys">
+    <div class="linha"></div>
+    <div class="fileira-dia-da-semana">
+      <div class="dia-da-semana">{{ diaSemana }}</div>
+      <div *ngFor='let anime of animes[diaSemana]'>
+        <app-anime-card [anime]="anime"></app-anime-card>
+      </div>
+      <div *ngIf="animes[diaSemana].length==0" class="no-animes">No animes to watch</div>
+    </div>
+  </div>
+  <!-- <div class="linha"></div> -->
+</div>
+<app-footer></app-footer>

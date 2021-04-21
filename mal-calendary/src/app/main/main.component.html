@@ -1,0 +1,19 @@
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+<div class="container-externo">
+    <div class="filho">
+        <div style="text-align: center;">
+            <div class="titulo-main">MAL SCHEDULE</div>
+            <div class="texto-main">
+                An unofficial application that shows a calendar with the animes you are watching.
+                 Enter your username bellow
+            </div>
+            <div class="enviar">
+                <mat-form-field style="margin-right: 10px;">
+                    <mat-label>username</mat-label>
+                    <input matInput [(ngModel)]="username" (keyup.enter)="routeSchedule()">
+                </mat-form-field>
+                <button mat-raised-button (click)="routeSchedule()" color="primary">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
